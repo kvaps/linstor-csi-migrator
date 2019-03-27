@@ -28,8 +28,8 @@ while read VOLUME_JSON; do
     cat <<EOT
 # PV: $NAME"
 linstor rd sp "$NAME" 'Aux/csi-volume-annotations' '$CSI_VOLUME_ANNOTATIONS'
-kubectl patch persistentvolume "$NAME" -p '{"metadata":{"finalizers":null}}'
-kubectl delete persistentvolume "$NAME" --grace-period=0 --force --wait=false 2>/dev/null
+kubectl patch persistentvolume "$NAME" -p '{"metadata":{"finalizers":null}}' &&
+kubectl delete persistentvolume "$NAME" --grace-period=0 --force --wait=false 2>/dev/null &&
 kubectl patch persistentvolume "$NAME" -p '{"metadata":{"finalizers":null}}'
 echo '$VOLUME_JSON' | kubectl create -f -
 
