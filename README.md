@@ -5,8 +5,9 @@ Convert old LINSTOR flexVolumes to CSI
 
 Script takes PersistentVolumes with Linstor flexVolume driver or old-style CSI metadata, which stopped working after last update of linstor csi-plugin and generates commands for update their metadata to use with new csi-plugin.
 
-* https://github.com/LINBIT/linstor-csi/issues/4
-* https://github.com/LINBIT/linstor-csi/issues/7
+* https://github.com/LINBIT/linstor-csi/issues/4 `flexvolume` (migrate flexvolumes to csi)
+* https://github.com/LINBIT/linstor-csi/issues/7 `csi1` (migrate csi to use right volume names)
+* https://github.com/LINBIT/linstor-csi/issues/11 `csi2` (update csi to use right driver name)
 
 ### Preparation
 
@@ -30,7 +31,9 @@ Script takes PersistentVolumes with Linstor flexVolume driver or old-style CSI m
   # FlexVolumes:
   ./linstor-csi-migrator.sh flexvolume > flexvolume_commands.sh
   # Old format CSIs:
-  ./linstor-csi-migrator.sh csi > csi_commands.sh
+  ./linstor-csi-migrator.sh csi1 > csi1_commands.sh
+  # CSIs with old driver name:
+  ./linstor-csi-migrator.sh csi2 > csi2_commands.sh
   ```
 
 * Create backup of your Persistent Volumes:
@@ -39,4 +42,4 @@ Script takes PersistentVolumes with Linstor flexVolume driver or old-style CSI m
   kubectl get pv -o json > pv.json
   ```
 
-* Now you can open `commands.sh` and apply the changes.
+* Now you can open `*_commands.sh` and apply the changes.
