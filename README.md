@@ -43,3 +43,14 @@ Script takes PersistentVolumes with Linstor flexVolume driver or old-style CSI m
   ```
 
 * Now you can open `*_commands.sh` and apply the changes.
+
+
+### Additional steps
+
+* To avoid problems with pods termination, before upgrade `flexvolume` volumes, please stop all the workload.
+
+* During `csi2` upgrade, you should also change drivername for running pods, on every node run:
+
+  ```
+  sed -i 's/io.drbd.linstor-csi/linstor.csi.linbit.com/g' `find /var/lib/kubelet/pods/ -mindepth 5 -maxdepth 5 -name vol_data.json`
+  ```
